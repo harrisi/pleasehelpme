@@ -5,3 +5,6 @@ node_modules
 build/
 functions/
 .eslintcache
+
+# Local Netlify folder
+.netlify
