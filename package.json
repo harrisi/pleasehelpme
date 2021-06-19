@@ -1,0 +1,11 @@
+{
+  "name": "please help me",
+  "version": "1.0.0",
+  "description": "please",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ian Harris <ianhedoesit@gmail.com>",
+  "license": "MIT"
+}
