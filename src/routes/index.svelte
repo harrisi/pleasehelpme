@@ -1,7 +1,9 @@
 <script>
 import { onMount } from 'svelte'
+import { dev } from '$app/env'
+
 let bid
-let url = 'https://pleasehelpme.bid'
+let url = dev ? 'http://localhost:3001' : 'https://pleasehelpme.bid'
 
 function openBid() {
   bid = window.open(url, '_blank')
