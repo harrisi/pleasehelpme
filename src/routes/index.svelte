@@ -3,25 +3,37 @@ import { onMount } from 'svelte'
 import { dev } from '$app/env'
 
 let bid
-let url = dev ? 'http://localhost:3001' : 'https://pleasehelpme.bid'
 
-function openBid() {
-  bid = window.open(url, '_blank')
+let urlBase = 'https://pleasehelpme.'
+let tlds = 'bid date email farm golf party quest rest run shop surf trade work'.split(' ')
+let domains = []
+let receivedNonces = new Set()
 
-  setTimeout(() => {
-    bid.postMessage('test', url)
-  }, 3000)
+if (dev) {
+  domains = [...tlds.keys()].map(e => 'http://localhost:'.concat((e + 3001).toString(10)))
+} else {
+  domains = tlds.map(tld => urlBase.concat(tld))
+}
+
+function openBid(which) {
+  bid = window.open(domains[which], '_blank')
 }
 
 onMount(() => {
   window.addEventListener('message', (event) => {
-    if (event.origin !== url) return
+    if (!domains.includes(event.origin)) return
+    if (receivedNonces.has(event.data.nonce)) return
 
-    console.log({ event })
+    console.log(event.data.message)
+
+    receivedNonces.add(event.data.nonce)
+
+    // @ts-ignore
+    event.source.postMessage('hello', event.origin)
   }, false)
 })
 </script>
 
 <p>please help me</p>
 
-<div on:click={ openBid }>test</div>
+<div on:click={ () => { openBid(0) } }>test</div>
