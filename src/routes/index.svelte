@@ -1,5 +1,3 @@
-<link rel="manifest" href="manifest.webmanifest">
-
 <script>
 import { onMount } from 'svelte'
 import { dev } from '$app/env'
