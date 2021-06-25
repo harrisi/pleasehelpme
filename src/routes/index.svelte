@@ -48,7 +48,9 @@ onMount(() => {
 <div on:click={ () => { openBid(0) } }>test</div>
 
 {#each domains as domain}
+<span class="square">
 <iframe id={domain} title="please help me {domain.split('.').pop()}" src={domain}></iframe>
+</span>
 {/each}
 
 <h3>received</h3>
@@ -71,10 +73,10 @@ iframe {
   height: 400px;
 }
 
-@media screen and (min-width: 300px) and (max-width: 600px) {
+@media screen and (max-width: 600px) {
   iframe {
-    width: 100%;
-    height: auto;
+    width: 50vw;
+    height: 50vw;
   }
 }
 </style>
