@@ -1,7 +1,7 @@
 {
 	"name": "pleasehelpme.games",
 	"short_name": "phmg",
-	"start_url": "/index.html",
+	"start_url": "/",
 	"display": "fullscreen",
 	"background_color": "#000000",
 	"theme_color": "FF0000"
