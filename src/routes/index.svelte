@@ -8,6 +8,8 @@ let urlBase = 'https://pleasehelpme.'
 let tlds = 'bid date email farm golf party quest rest run shop surf trade work'.split(' ')
 let domains = []
 let receivedNonces = new Set()
+let received = []
+let sent = []
 
 if (dev) {
   domains = [...tlds.keys()].map(e => 'http://localhost:'.concat((e + 3001).toString(10)))
@@ -22,14 +24,21 @@ function openBid(which) {
 onMount(() => {
   window.addEventListener('message', (event) => {
     if (!domains.includes(event.origin)) return
-    if (receivedNonces.has(event.data.nonce)) return
+    if (receivedNonces.has(`${event.origin}${event.data.nonce}`)) return
+    // ignore if no nonce so it doesn't loop forever
+    if (event.data && !event.data.nonce) return
 
-    console.log(event.data.message)
+    received = [...received, event.data]
 
     receivedNonces.add(event.data.nonce)
 
+    let msg = {
+      message: 'hello from games',
+      to: event.origin,
+    }
     // @ts-ignore
-    event.source.postMessage('hello', event.origin)
+    event.source.postMessage(msg.message, msg.to)
+    sent = [...sent, msg]
   }, false)
 })
 </script>
@@ -37,3 +46,21 @@ onMount(() => {
 <p>please help me</p>
 
 <div on:click={ () => { openBid(0) } }>test</div>
+
+{#each domains as domain}
+<iframe id={domain} title="please help me {domain.split('.').pop()}" width="400" height="400" src={domain}></iframe>
+{/each}
+
+<h3>received</h3>
+<ul>
+  {#each received as receive}
+    <li>{receive.message}: {receive.nonce}</li>
+  {/each}
+</ul>
+
+<h3>sent</h3>
+<ul>
+  {#each sent as send}
+    <li>{send.message}: {send.to}</li>
+  {/each}
+</ul>
