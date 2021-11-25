@@ -3,9 +3,17 @@
 # Please see the documentation for all configuration options:
 # https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
+# https://appsectribe.medium.com/automerge-github-dependabot-alerts-with-github-actions-7cd6f5763750
+# https://web.archive.org/web/20211125074718/https://appsectribe.medium.com/automerge-github-dependabot-alerts-with-github-actions-7cd6f5763750
+
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
       interval: "daily"
+    rebase-strategy: "auto"
+    labels:
+      - "security"
+      - "dependencies"
+
