@@ -11,9 +11,10 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
     rebase-strategy: "auto"
     labels:
       - "security"
       - "dependencies"
+    open-pull-requests-limit: 0
 
